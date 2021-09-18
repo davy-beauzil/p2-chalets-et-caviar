@@ -4,7 +4,7 @@
  * PRIX
  */
 add_action('add_meta_boxes', 'add_price_metabox', 0);
-add_action('save_post', 'price_box_save');
+add_action('save_post_chalets', 'price_box_save');
 
 /**
  * TYPES
@@ -16,19 +16,19 @@ add_action('save_post', 'price_box_save');
  * PIÈCES
  */
 add_action('add_meta_boxes', 'add_room_metabox', 0);
-add_action('save_post', 'room_box_save');
+add_action('save_post_chalets', 'room_box_save');
 
 /**
  * SURFACES
  */
 add_action('add_meta_boxes', 'add_surface_metabox', 0);
-add_action('save_post', 'surface_box_save');
+add_action('save_post_chalets', 'surface_box_save');
 
 /**
  * CAPACITÉS D'ACCUEIL
  */
 add_action('add_meta_boxes', 'add_capacity_metabox', 0);
-add_action('save_post', 'capacity_box_save');
+add_action('save_post_chalets', 'capacity_box_save');
 
 add_action('edit_form_after_title', function () {
   global $post, $wp_meta_boxes;
@@ -66,7 +66,7 @@ function price_box_content($post)
 /**
  * Sauvegarde de la metabox PRIX
  */
-function price_box_save($post_ID)
+function price_box_save($post_id)
 {
   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
     return;
@@ -75,24 +75,24 @@ function price_box_save($post_ID)
     return;
   }
   if ('page' == $_POST['post-type']) {
-    if (current_user_can('edit-page', $post_ID)) {
+    if (current_user_can('edit-page', $post_id)) {
       return;
     }
   } else {
-    if (current_user_can('edit-post', $post_ID)) {
+    if (current_user_can('edit-post', $post_id)) {
       return;
     }
   }
 
   if (isset($_POST['price'])) {
     $prices = esc_html($_POST['price']);
-    update_post_meta($post_ID, 'price', $prices);
+    update_post_meta($post_id, 'price', $prices);
   } else {
     // traiter l'erreur
   }
   if (isset($_POST['recurrence'])) {
     $recurrence = esc_html($_POST['recurrence']);
-    update_post_meta($post_ID, 'recurrence', $recurrence);
+    update_post_meta($post_id, 'recurrence', $recurrence);
   } else {
     // traiter l'erreur
   }

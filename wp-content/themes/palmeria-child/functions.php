@@ -16,18 +16,18 @@ function enqueue_styles()
   wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
 }
 
-add_action('phpmailer_init', 'my_phpmailer_configuration');
-function my_phpmailer_configuration($phpmailer)
-{
-  $phpmailer->isSMTP();
-  $phpmailer->Host = 'smtp.hostinger.fr';
-  $phpmailer->SMTPAuth = true; // Indispensable pour forcer l'authentification
-  $phpmailer->Port = 465;
-  $phpmailer->Username = 'chaletsetcaviar@davy-beauzil.fr';
-  $phpmailer->Password = 'Jeunes@peurp16';
+// add_action('phpmailer_init', 'my_phpmailer_configuration');
+// function my_phpmailer_configuration($phpmailer)
+// {
+//   $phpmailer->isSMTP();
+//   $phpmailer->Host = 'smtp.hostinger.com';
+//   $phpmailer->SMTPAuth = true; // Indispensable pour forcer l'authentification
+//   $phpmailer->Port = 465;
+//   $phpmailer->Username = 'chaletsetcaviar@davy-beauzil.fr';
+//   $phpmailer->Password = 'Jeunes@peurp16';
 
-  // Configurations complémentaires
-  $phpmailer->SMTPSecure = "ssl"; // Sécurisation du serveur SMTP : ssl ou tls
-  $phpmailer->From = "chaletsetcaviar@davy-beauzil.fr"; // Adresse email d'envoi des mails
-  $phpmailer->FromName = "Chalets et caviar"; // Nom affiché lors de l'envoi du mail
-}
+//   // Configurations complémentaires
+//   $phpmailer->SMTPSecure = "tls"; // Sécurisation du serveur SMTP : ssl ou tls
+//   $phpmailer->From = "chaletsetcaviar@davy-beauzil.fr"; // Adresse email d'envoi des mails
+//   $phpmailer->FromName = "Chalets et caviar"; // Nom affiché lors de l'envoi du mail
+// }

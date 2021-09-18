@@ -9,8 +9,8 @@
 }
 
 #masthead li a {
-  font-size: 1.5rem;
-  text-transform: capitalize;
+  font-size: 1rem;
+  text-transform: none;
 }
 
 #content {
