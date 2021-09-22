@@ -36,25 +36,34 @@ function add_type_taxonomy()
 
   $labels = array(
     'name'                => _x('Types', 'Taxonomy General Name'),
+    'nav_item_name'                => _x('Nom du nouveau type', 'Taxonomy General Name'),
+    'parent_item'                => _x('Type parent', 'Taxonomy General Name'),
     // Le nom au singulier
-    'singular_name'       => _x('Type', 'Taxonomy Singular Name'),
+    //'singular_name'       => _x('Type', 'Taxonomy Singular Name'),
     // Le libellé affiché dans le menu
-    'menu_name'           => __('Types'),
+    //'menu_name'           => __('Types'),
     // Les différents libellés de l'administration
-    'all_items'           => __('Tous les types'),
+    // 'all_items'           => __('Tous les types'),
     'add_new_item'        => __('Ajouter un nouveau type'),
-    'edit_item'           => __('Editer le type'),
-    'update_item'         => __('Modifier le type'),
-    'search_items'        => __('Rechercher un type'),
+    // 'edit_item'           => __('Editer le type'),
+    // 'update_item'         => __('Modifier le type'),
+    // 'search_items'        => __('Rechercher un type'),
   );
 
   $args = array(
     'labels' => $labels,
     'hierarchical' => true,
-    'show_admin_column' => true
+    'public' => true,
+    'show_in_rest' => true, // afficher dans l'édition
+    'rest_base' => 'types', // afficher dans l'édition
+    // 'query_var' => 'type', // détermine le paramètre de la requête
+    // 'show_ui' => true, // afficher dans l'édition et dans l'administration
+    // 'show_admin_column' => true, // afficher une colonne dans la liste des types de publications
+    'rewrite' => array('slug' => 'type_taxonomy'),
   );
 
-  register_taxonomy('type', 'chalets', $args);
+  register_taxonomy('type_taxonomy', array('chalets'), $args);
+  //register_taxonomy_for_object_type('type', 'chalets');
 }
 
 function add_room_taxonomy()
