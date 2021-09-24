@@ -52,3 +52,87 @@ div.content_photo {
 .contact-form-wide {
   width: 100%;
 }
+
+/* Taxonomy page (locations & ventes) */
+.taxonomy_posts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+  .taxonomy_posts {
+    grid-template-columns: 1fr;
+  }
+}
+
+.taxonomy_posts a {
+  text-decoration: none;
+}
+
+.taxonomy_post {
+  position: relative;
+  border: 1px solid #ddd;
+  transition: 0.3s;
+}
+.taxonomy_post:hover {
+  -webkit-transform: scale(1.025) rotate(0deg) skewX(0deg) skewY(0deg);
+  -moz-transform: scale(1.025) rotate(0deg) skewX(0deg) skewY(0deg);
+  -ms-transform: scale(1.025) rotate(0deg) skewX(0deg) skewY(0deg);
+  -o-transform: scale(1.025) rotate(0deg) skewX(0deg) skewY(0deg);
+  transform: scale(1.025) rotate(0deg) skewX(0deg) skewY(0deg);
+}
+
+.taxonomy_post_title {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0;
+  color: #000;
+}
+.taxonomy_post_price {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  background-color: goldenrod;
+  color: #fff;
+  font-weight: bold;
+  padding: 5px 40px 5px 10px;
+}
+
+/* content.php --> */
+table {
+  border-color: #fff;
+}
+th {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+td,
+th {
+  border-color: #fff;
+}
+
+td {
+  padding: 5px 10px 15px 15px;
+}
+
+tr {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.content_description_icon {
+  width: 15px;
+  height: 15px;
+  color: gray;
+  background-color: #eee;
+  border-radius: 50%;
+  padding: 5px;
+  margin-right: 5px;
+}
+tbody {
+  display: grid;
+  flex-direction: column;
+}
+/* <-- content.php */

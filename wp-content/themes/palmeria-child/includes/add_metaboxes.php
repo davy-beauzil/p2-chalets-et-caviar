@@ -7,12 +7,6 @@ add_action('add_meta_boxes', 'add_price_metabox', 0);
 add_action('save_post_chalets', 'price_box_save');
 
 /**
- * TYPES
- */
-//add_action('add_meta_boxes', 'add_type_metabox', 0);
-//add_action('save_post', 'type_box_save');
-
-/**
  * PIÈCES
  */
 add_action('add_meta_boxes', 'add_room_metabox', 0);
@@ -29,6 +23,7 @@ add_action('save_post_chalets', 'surface_box_save');
  */
 add_action('add_meta_boxes', 'add_capacity_metabox', 0);
 add_action('save_post_chalets', 'capacity_box_save');
+
 
 add_action('edit_form_after_title', function () {
   global $post, $wp_meta_boxes;
@@ -65,97 +60,32 @@ function price_box_content($post)
 
 /**
  * Sauvegarde de la metabox PRIX
+ * TODO : ajouter try/catch & inverser la logique 
  */
 function price_box_save($post_id)
 {
   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
     return;
   }
-  if (!wp_verify_nonce($_POST['price_box_content_nonce'], plugin_basename(__FILE__))) {
-    return;
-  }
-  if ('page' == $_POST['post-type']) {
-    if (current_user_can('edit-page', $post_id)) {
-      return;
-    }
-  } else {
-    if (current_user_can('edit-post', $post_id)) {
+  if (isset($_POST['price_box_content_nonce'])) {
+    if (!wp_verify_nonce($_POST['price_box_content_nonce'], plugin_basename(__FILE__))) {
       return;
     }
   }
-
+  if (isset($_POST['price_box_content_nonce'])) {
+    if ('page' == $_POST['post-type']) {
+      if (current_user_can('edit-page', $post_id)) {
+        return;
+      }
+    } else {
+      if (current_user_can('edit-post', $post_id)) {
+        return;
+      }
+    }
+  }
   if (isset($_POST['price'])) {
     $prices = esc_html($_POST['price']);
     update_post_meta($post_id, 'price', $prices);
-  } else {
-    // traiter l'erreur
-  }
-  if (isset($_POST['recurrence'])) {
-    $recurrence = esc_html($_POST['recurrence']);
-    update_post_meta($post_id, 'recurrence', $recurrence);
-  } else {
-    // traiter l'erreur
-  }
-}
-
-/**
- * Ajout de la metabox TYPE
- */
-function add_type_metabox()
-{
-  add_meta_box(
-    'type_metaboxes',
-    'Type',
-    'type_box_content',
-    'chalets',
-    'advanced'
-  );
-}
-/**
- * Affichage de la metabox TYPE
- */
-function type_box_content($post)
-{
-  wp_nonce_field(plugin_basename(__FILE__), 'type_box_content_nonce');
-  $type = get_post_meta($post->ID, 'type', true);
-  echo '<div id="types">';
-
-  echo '<p><input id="location" type="radio" name="type" value="Location" ';
-  if ($type == "Location" || $type == null) echo 'checked';
-  echo '/>';
-  echo '<label for="location">Location (paiement par semaine)</label></p>';
-
-  echo '<p><input id="vente" type="radio" name="type" value="Vente" ';
-  if ($type == "Vente") echo 'checked';
-  echo '/>';
-  echo '<label for="vente">Vente (paiement unique)</label></p>';
-  echo '</div>';
-}
-
-/**
- * Sauvegarde de la metabox TYPE
- */
-function type_box_save($post_ID)
-{
-  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-    return;
-  }
-  if (!wp_verify_nonce($_POST['type_box_content_nonce'], plugin_basename(__FILE__))) {
-    return;
-  }
-  if ('page' == $_POST['post-type']) {
-    if (current_user_can('edit-page', $post_ID)) {
-      return;
-    }
-  } else {
-    if (current_user_can('edit-post', $post_ID)) {
-      return;
-    }
-  }
-
-  if (isset($_POST['type'])) {
-    $type = esc_html($_POST['type']);
-    update_post_meta($post_ID, 'type', $type);
   } else {
     // traiter l'erreur
   }
@@ -184,9 +114,9 @@ function room_box_content($post)
   $bedrooms = get_post_meta($post->ID, 'bedrooms', true);
   $bathrooms = get_post_meta($post->ID, 'bathrooms', true);
   echo '<p><label for="bedrooms">Nombre de chambres </label></p>';
-  echo '<input id="bedrooms" type="number" name="bedrooms" value="' . $bedrooms . '"/>';
+  echo '<input id="bedrooms" type="number" name="bedrooms" value="' . $bedrooms . '"required />';
   echo '<p><label for="bathrooms">Nombre de salle de bain </label></p>';
-  echo '<input id="bathrooms" type="number" name="bathrooms" value="' . $bathrooms . '"/>';
+  echo '<input id="bathrooms" type="number" name="bathrooms" value="' . $bathrooms . '" required/>';
 }
 
 /**
@@ -209,7 +139,6 @@ function room_box_save($post_ID)
       return;
     }
   }
-
   if (isset($_POST['bedrooms'])) {
     $bedrooms = esc_html($_POST['bedrooms']);
     update_post_meta($post_ID, 'bedrooms', $bedrooms);
@@ -269,7 +198,6 @@ function surface_box_save($post_ID)
       return;
     }
   }
-
   if (isset($_POST['surface'])) {
     $surface = esc_html($_POST['surface']);
     update_post_meta($post_ID, 'surface', $surface);
@@ -326,7 +254,6 @@ function capacity_box_save($post_ID)
       return;
     }
   }
-
   if (isset($_POST['min'])) {
     $min = esc_html($_POST['min']);
     update_post_meta($post_ID, 'min', $min);
