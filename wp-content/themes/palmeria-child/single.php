@@ -22,7 +22,7 @@ get_header();
 
 			get_template_part('template-parts/biography');
 
-			palmeria_the_post_navigation();
+			//palmeria_the_post_navigation();
 
 			palmeria_related_posts($post);
 
