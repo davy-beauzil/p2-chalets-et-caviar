@@ -55,7 +55,7 @@ function price_box_content($post)
   wp_nonce_field(plugin_basename(__FILE__), 'price_box_content_nonce');
   $price = get_post_meta($post->ID, 'price', true);
   echo '<label for="price">Prix </label>';
-  echo '<input id="price" type="number" name="price" value="' . $price . '" required /> €';
+  echo '<input id="price" type="number" name="price" value="' . $price . '"/> €';
 }
 
 /**
@@ -114,9 +114,9 @@ function room_box_content($post)
   $bedrooms = get_post_meta($post->ID, 'bedrooms', true);
   $bathrooms = get_post_meta($post->ID, 'bathrooms', true);
   echo '<p><label for="bedrooms">Nombre de chambres </label></p>';
-  echo '<input id="bedrooms" type="number" name="bedrooms" value="' . $bedrooms . '"required />';
+  echo '<input id="bedrooms" type="number" name="bedrooms" value="' . $bedrooms . '"/>';
   echo '<p><label for="bathrooms">Nombre de salle de bain </label></p>';
-  echo '<input id="bathrooms" type="number" name="bathrooms" value="' . $bathrooms . '" required/>';
+  echo '<input id="bathrooms" type="number" name="bathrooms" value="' . $bathrooms . '"/>';
 }
 
 /**
