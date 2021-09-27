@@ -25,7 +25,7 @@ function chalets_custom_post_type()
     'labels'              => $labels,
     'menu_icon'           => 'dashicons-admin-home',
     'menu_position'       => 3,
-    'supports'            => array('title', 'author', 'thumbnail'),
+    'supports'            => array('title', 'editor', 'author', 'thumbnail'),
     'taxonomies'          => array('typechalet'),
     'publicly_queryable'  => true,
     'show_in_rest'        => true,
