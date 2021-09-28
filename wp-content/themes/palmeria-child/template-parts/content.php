@@ -80,6 +80,18 @@
     <hr class="content_separator">
     <?php the_content() ?>
 
+    <div class="content_book">
+      <a href="<?php echo get_page_link(get_page_by_title('contact')->ID); ?>" class="content_book_button">
+        <?php
+        if (get_the_terms($post->ID, 'typechalet')[0]->name === "Locations") {
+          echo 'Réserver mon séjour';
+        } else if (get_the_terms($post->ID, 'typechalet')[0]->name === "Ventes") {
+          echo 'Acheter ce chalet';
+        }
+        ?>
+      </a>
+    </div>
+
   </div>
 
 </article>
