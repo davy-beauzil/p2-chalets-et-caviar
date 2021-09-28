@@ -4,6 +4,8 @@
  Template:     palmeria
 */
 
+@import url("https://fonts.googleapis.com/css2?family=Rouge+Script&display=swap");
+
 @import url("css/header.css");
 @import url("css/content.css");
 @import url("css/taxonomy-typechalet.css");
