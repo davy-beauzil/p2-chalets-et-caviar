@@ -21,7 +21,7 @@
     ?>
   </header><!-- .entry-header -->
   <div>
-    <table>
+    <!-- <table>
       <tr>
         <th><i class="fa-solid fa-house content_description_icon"></i> Type</th>
         <th><i class="fa-solid fa-euro-sign content_description_icon"></i> Prix</th>
@@ -42,49 +42,42 @@
       </tr>
     </table>
 
-    <hr>
+    <hr> -->
 
     <div class="content_infos">
-      <?php if (get_the_terms($post->ID, 'typechalet')[0]->name) : ?>
+      <?php if (isset(get_the_terms($post->ID, 'typechalet')[0]->name)) : ?>
         <div class="content_info">
-          <div class="content_info_title"><i class="fa-solid fa-house content_description_icon"></i> Type</div>
-          <div class="content_info_value"><?php echo get_the_terms($post->ID, 'typechalet')[0]->name; ?></div>
+          <div class="content_info_title"><i class="fa-solid fa-house content_description_icon"></i><?php echo get_the_terms($post->ID, 'typechalet')[0]->name; ?></div>
         </div>
       <?php endif;
       if (get_post_meta($post->ID, 'price', true)) : ?>
         <div class="content_info">
-          <div class="content_info_title"><i class="fa-solid fa-euro-sign content_description_icon"></i> Prix</div>
-          <div class="content_info_value"><?php echo get_post_meta($post->ID, 'price', true); ?> € <?php if (get_the_terms($post->ID, 'typechalet')[0]->name === "Locations") echo '/ semaine' ?> </div>
+          <div class="content_info_title"><i class="fa-solid fa-euro-sign content_description_icon"></i><?php echo get_post_meta($post->ID, 'price', true); ?> € <?php if (get_the_terms($post->ID, 'typechalet')[0]->name === "Locations") echo '/ semaine' ?> </div>
         </div>
       <?php endif;
       if (get_post_meta($post->ID, 'min', true) && get_post_meta($post->ID, 'max', true)) : ?>
         <div class="content_info">
-          <div class="content_info_title"><i class="fa-solid fa-person content_description_icon"></i> Capacité d'accueil</div>
-          <div class="content_info_value">De <?php echo get_post_meta($post->ID, 'min', true); ?> à <?php echo get_post_meta($post->ID, 'max', true); ?> personnes</div>
+          <div class="content_info_title"><i class="fa-solid fa-person content_description_icon"></i>De <?php echo get_post_meta($post->ID, 'min', true); ?> à <?php echo get_post_meta($post->ID, 'max', true); ?> personnes</div>
         </div>
       <?php endif;
       if (get_post_meta($post->ID, 'bedrooms', true)) : ?>
         <div class="content_info">
-          <div class="content_info_title"><i class="fa-solid fa-bed content_description_icon"></i> Chambre(s)</div>
-          <div class="content_info_value"><?php echo get_post_meta($post->ID, 'bedrooms', true); ?></div>
+          <div class="content_info_title"><i class="fa-solid fa-bed content_description_icon"></i><?php echo get_post_meta($post->ID, 'bedrooms', true); ?> Chambre(s)</div>
         </div>
       <?php endif;
       if (get_post_meta($post->ID, 'bathrooms', true)) : ?>
         <div class="content_info">
-          <div class="content_info_title"><i class="fa-solid fa-bath content_description_icon"></i> Salle(s) de bain</div>
-          <div class="content_info_value"><?php echo get_post_meta($post->ID, 'bathrooms', true); ?></div>
+          <div class="content_info_title"><i class="fa-solid fa-bath content_description_icon"></i><?php echo get_post_meta($post->ID, 'bathrooms', true); ?> Salle(s) de bain</div>
         </div>
       <?php endif;
       if (get_post_meta($post->ID, 'surface', true)) : ?>
         <div class="content_info">
-          <div class="content_info_title"><i class="fa-solid fa-ruler content_description_icon"></i> Surface</div>
-          <div class="content_info_value"><?php echo get_post_meta($post->ID, 'surface', true); ?></div>
+          <div class="content_info_title"><i class="fa-solid fa-ruler content_description_icon"></i><?php echo get_post_meta($post->ID, 'surface', true); ?>m2</div>
         </div>
       <?php endif; ?>
     </div>
 
-    <hr>
-
+    <hr class="content_separator">
     <?php the_content() ?>
 
   </div>
