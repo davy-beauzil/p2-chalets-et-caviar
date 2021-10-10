@@ -27,8 +27,8 @@ add_action('save_post_chalets', 'capacity_box_save');
 
 add_action('edit_form_after_title', function () {
   global $post, $wp_meta_boxes;
-  do_meta_boxes(get_current_screen(), 'advanced', $post);
-  unset($wp_meta_boxes[get_post_type($post)]['advanced']);
+  do_meta_boxes(get_current_screen(), 'side', $post);
+  unset($wp_meta_boxes[get_post_type($post)]['side']);
 });
 
 
@@ -43,7 +43,8 @@ function add_price_metabox()
     'Prix',
     'price_box_content',
     'chalets',
-    'advanced'
+    'side',
+    'core'
   );
 }
 
@@ -62,32 +63,16 @@ function price_box_content($post)
  * Sauvegarde de la metabox PRIX
  * TODO : ajouter try/catch & inverser la logique 
  */
-function price_box_save($post_id)
+function price_box_save($post_ID)
 {
-  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-    return;
-  }
-  if (isset($_POST['price_box_content_nonce'])) {
-    if (!wp_verify_nonce($_POST['price_box_content_nonce'], plugin_basename(__FILE__))) {
-      return;
-    }
-  }
-  if (isset($_POST['price_box_content_nonce'])) {
-    if ('page' == $_POST['post-type']) {
-      if (current_user_can('edit-page', $post_id)) {
-        return;
-      }
-    } else {
-      if (current_user_can('edit-post', $post_id)) {
-        return;
+  if ((!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE))) {
+    if (wp_verify_nonce($_POST['price_box_content_nonce'], plugin_basename(__FILE__))) {
+
+      if (isset($_POST['price'])) {
+        $price = esc_html($_POST['price']);
+        update_post_meta($post_ID, 'price', $price);
       }
     }
-  }
-  if (isset($_POST['price'])) {
-    $prices = esc_html($_POST['price']);
-    update_post_meta($post_id, 'price', $prices);
-  } else {
-    // traiter l'erreur
   }
 }
 
@@ -102,7 +87,8 @@ function add_room_metabox()
     'Pièces',
     'room_box_content',
     'chalets',
-    'advanced'
+    'side',
+    'core'
   );
 }
 /**
@@ -124,32 +110,18 @@ function room_box_content($post)
  */
 function room_box_save($post_ID)
 {
-  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-    return;
-  }
-  if (!wp_verify_nonce($_POST['room_box_content_nonce'], plugin_basename(__FILE__))) {
-    return;
-  }
-  if ('page' == $_POST['post-type']) {
-    if (current_user_can('edit-page', $post_ID)) {
-      return;
+  if ((!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE))) {
+    if (wp_verify_nonce($_POST['room_box_content_nonce'], plugin_basename(__FILE__))) {
+
+      if (isset($_POST['bedrooms'])) {
+        $bedrooms = esc_html($_POST['bedrooms']);
+        update_post_meta($post_ID, 'bedrooms', $bedrooms);
+      }
+      if (isset($_POST['bathrooms'])) {
+        $bathrooms = esc_html($_POST['bathrooms']);
+        update_post_meta($post_ID, 'bathrooms', $bathrooms);
+      }
     }
-  } else {
-    if (current_user_can('edit-post', $post_ID)) {
-      return;
-    }
-  }
-  if (isset($_POST['bedrooms'])) {
-    $bedrooms = esc_html($_POST['bedrooms']);
-    update_post_meta($post_ID, 'bedrooms', $bedrooms);
-  } else {
-    // traiter l'erreur
-  }
-  if (isset($_POST['bathrooms'])) {
-    $bathrooms = esc_html($_POST['bathrooms']);
-    update_post_meta($post_ID, 'bathrooms', $bathrooms);
-  } else {
-    // traiter l'erreur
   }
 }
 
@@ -164,7 +136,8 @@ function add_surface_metabox()
     'Surface',
     'surface_box_content',
     'chalets',
-    'advanced'
+    'side',
+    'core'
   );
 }
 /**
@@ -183,26 +156,14 @@ function surface_box_content($post)
  */
 function surface_box_save($post_ID)
 {
-  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-    return;
-  }
-  if (!wp_verify_nonce($_POST['surface_box_content_nonce'], plugin_basename(__FILE__))) {
-    return;
-  }
-  if ('page' == $_POST['post-type']) {
-    if (current_user_can('edit-page', $post_ID)) {
-      return;
+  if ((!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE))) {
+    if (wp_verify_nonce($_POST['surface_box_content_nonce'], plugin_basename(__FILE__))) {
+
+      if (isset($_POST['surface'])) {
+        $surface = esc_html($_POST['surface']);
+        update_post_meta($post_ID, 'surface', $surface);
+      }
     }
-  } else {
-    if (current_user_can('edit-post', $post_ID)) {
-      return;
-    }
-  }
-  if (isset($_POST['surface'])) {
-    $surface = esc_html($_POST['surface']);
-    update_post_meta($post_ID, 'surface', $surface);
-  } else {
-    // traiter l'erreur
   }
 }
 
@@ -214,10 +175,10 @@ function add_capacity_metabox()
 {
   add_meta_box(
     'capacity_metaboxes',
-    'Capacité d\'accueil',
+    'Capacité d‘accueil',
     'capacity_box_content',
     'chalets',
-    'side'
+    'advanced'
   );
 }
 /**
@@ -226,12 +187,12 @@ function add_capacity_metabox()
 function capacity_box_content($post)
 {
   wp_nonce_field(plugin_basename(__FILE__), 'capacity_box_content_nonce');
-  $min = get_post_meta($post->ID, 'min', true);
-  $max = get_post_meta($post->ID, 'max', true);
-  echo '<p><label for="min">Entre </label></p>';
-  echo '<input id="min" type="number" name="min" value="' . $min . '"/>';
-  echo '<p><label for="max">et </label></p>';
-  echo '<input id="max" type="number" name="max" value="' . $max . '"/> personnes';
+  $minCapacity = get_post_meta($post->ID, 'minCapacity', true);
+  $maxCapacity = get_post_meta($post->ID, 'maxCapacity', true);
+  echo '<p><label for="minCapacity">Entre </label></p>';
+  echo '<input id="minCapacity" type="number" name="minCapacity" value="' . $minCapacity . '"/>';
+  echo '<p><label for="maxCapacity">et </label></p>';
+  echo '<input id="maxCapacity" type="number" name="maxCapacity" value="' . $maxCapacity . '"/> personnes';
 }
 
 /**
@@ -239,31 +200,48 @@ function capacity_box_content($post)
  */
 function capacity_box_save($post_ID)
 {
-  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-    return;
-  }
-  if (!wp_verify_nonce($_POST['capacity_box_content_nonce'], plugin_basename(__FILE__))) {
-    return;
-  }
-  if ('page' == $_POST['post-type']) {
-    if (current_user_can('edit-page', $post_ID)) {
-      return;
+  if ((!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE))) {
+    if (wp_verify_nonce($_POST['capacity_box_content_nonce'], plugin_basename(__FILE__))) {
+
+      if (isset($_POST['minCapacity'])) {
+        $min = esc_html($_POST['minCapacity']);
+        update_post_meta($post_ID, 'minCapacity', $min);
+      }
+
+      if (isset($_POST['maxCapacity'])) {
+        $max = esc_html($_POST['maxCapacity']);
+        update_post_meta($post_ID, 'maxCapacity', $max);
+      }
     }
-  } else {
-    if (current_user_can('edit-post', $post_ID)) {
-      return;
-    }
-  }
-  if (isset($_POST['min'])) {
-    $min = esc_html($_POST['min']);
-    update_post_meta($post_ID, 'min', $min);
-  } else {
-    // traiter l'erreur
-  }
-  if (isset($_POST['max'])) {
-    $max = esc_html($_POST['max']);
-    update_post_meta($post_ID, 'max', $max);
-  } else {
-    // traiter l'erreur
   }
 }
+// function capacity_box_save_old($post_ID)
+// {
+//   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+//     return;
+//   }
+//   if (!wp_verify_nonce($_POST['capacity_box_content_nonce'], plugin_basename(__FILE__))) {
+//     return;
+//   }
+//   if ('page' == $_POST['post-type']) {
+//     if (current_user_can('edit-page', $post_ID)) {
+//       return;
+//     }
+//   } else {
+//     if (current_user_can('edit-post', $post_ID)) {
+//       return;
+//     }
+//   }
+//   if (isset($_POST['min'])) {
+//     $min = esc_html($_POST['min']);
+//     update_post_meta($post_ID, 'min', $min);
+//   } else {
+//     // traiter l'erreur
+//   }
+//   if (isset($_POST['max'])) {
+//     $max = esc_html($_POST['max']);
+//     update_post_meta($post_ID, 'max', $max);
+//   } else {
+//     // traiter l'erreur
+//   }
+// }

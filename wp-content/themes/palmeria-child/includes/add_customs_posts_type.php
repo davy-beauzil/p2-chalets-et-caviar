@@ -32,6 +32,7 @@ function chalets_custom_post_type()
     'hierarchical'        => false,
     'public'              => true,
     'has_archive'         => true,
+    'show_in_nav_menus'   => true,
     'rewrite'        => array('slug' => 'chalets'),
 
   );
