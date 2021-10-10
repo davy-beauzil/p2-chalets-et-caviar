@@ -215,33 +215,3 @@ function capacity_box_save($post_ID)
     }
   }
 }
-// function capacity_box_save_old($post_ID)
-// {
-//   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-//     return;
-//   }
-//   if (!wp_verify_nonce($_POST['capacity_box_content_nonce'], plugin_basename(__FILE__))) {
-//     return;
-//   }
-//   if ('page' == $_POST['post-type']) {
-//     if (current_user_can('edit-page', $post_ID)) {
-//       return;
-//     }
-//   } else {
-//     if (current_user_can('edit-post', $post_ID)) {
-//       return;
-//     }
-//   }
-//   if (isset($_POST['min'])) {
-//     $min = esc_html($_POST['min']);
-//     update_post_meta($post_ID, 'min', $min);
-//   } else {
-//     // traiter l'erreur
-//   }
-//   if (isset($_POST['max'])) {
-//     $max = esc_html($_POST['max']);
-//     update_post_meta($post_ID, 'max', $max);
-//   } else {
-//     // traiter l'erreur
-//   }
-// }
