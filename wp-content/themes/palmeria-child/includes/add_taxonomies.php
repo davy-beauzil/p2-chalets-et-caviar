@@ -24,6 +24,7 @@ function add_type_taxonomy()
     'public' => true,
     'show_in_rest' => true,
     'show_admin_column' => true,
+    'show_in_nav_menus' => true,
     'rewrite' => array('slug' => 'typechalet'),
   );
 

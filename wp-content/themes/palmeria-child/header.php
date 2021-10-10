@@ -82,7 +82,9 @@
 		palmeria_custom_header();
 		?>
 
-		<?php if ($wp_query->post->post_title !== 'Accueil') : ?>
-			<div id="content" class="site-content wrapper">
-				<!-- #content -->
-			<?php endif; ?>
+		<?php if (isset($wp_query->post->post_title)) :
+			if ($wp_query->post->post_title !== 'Accueil') : ?>
+				<div id="content" class="site-content wrapper">
+					<!-- #content -->
+			<?php endif;
+		endif; ?>

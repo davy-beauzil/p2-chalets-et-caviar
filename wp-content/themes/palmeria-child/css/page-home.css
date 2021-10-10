@@ -13,3 +13,8 @@
   color: #fff !important;
   background-color: goldenrod !important;
 }
+
+.page-home_recent_locations {
+  display: flex;
+  flex-direction: row;
+}

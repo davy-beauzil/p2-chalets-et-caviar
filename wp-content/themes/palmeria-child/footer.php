@@ -12,9 +12,11 @@
 
 ?>
 
-<?php if ($wp_query->post->post_title !== 'Accueil') : ?>
-    </div><!-- #content -->
-<?php endif; ?>
+<?php if (isset($wp_query->post->post_title)) :
+    if ($wp_query->post->post_title !== 'Accueil') : ?>
+        </div><!-- #content -->
+<?php endif;
+endif; ?>
 
 <footer id="colophon" class="site-footer">
     <div class="wrapper footer-wrapper">
