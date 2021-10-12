@@ -39,7 +39,9 @@ get_header();
                     <div class="taxonomy_post">
                         <a href="<?php echo the_permalink() ?>">
                             <?php if (has_post_thumbnail()) :
-                                the_post_thumbnail();
+                                the_post_thumbnail('post-thumbnail', [
+                                    'class' => 'taxonomy_post_image'
+                                ]);
                             endif; ?>
                             <p class="taxonomy_post_info taxonomy_post_title"><?php echo get_the_title() ?></p>
                             <p class="taxonomy_post_info taxonomy_post_price"> <?php echo $price ?> € <?php if (get_the_terms($post->ID, 'typechalet')[0]->name === "Locations") echo ' / semaine' ?></p>

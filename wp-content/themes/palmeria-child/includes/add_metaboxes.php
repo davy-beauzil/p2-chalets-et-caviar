@@ -25,14 +25,6 @@ add_action('add_meta_boxes', 'add_capacity_metabox', 0);
 add_action('save_post_chalets', 'capacity_box_save');
 
 
-add_action('edit_form_after_title', function () {
-  global $post, $wp_meta_boxes;
-  do_meta_boxes(get_current_screen(), 'side', $post);
-  unset($wp_meta_boxes[get_post_type($post)]['side']);
-});
-
-
-
 /**
  * Ajout de la metabox PRIX
  */
@@ -65,12 +57,15 @@ function price_box_content($post)
  */
 function price_box_save($post_ID)
 {
-  if ((!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE))) {
-    if (wp_verify_nonce($_POST['price_box_content_nonce'], plugin_basename(__FILE__))) {
-
+  if (!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE)) {
+    if (isset($_POST['price_box_content_nonce']) && wp_verify_nonce($_POST['price_box_content_nonce'], plugin_basename(__FILE__))) {
       if (isset($_POST['price'])) {
-        $price = esc_html($_POST['price']);
-        update_post_meta($post_ID, 'price', $price);
+        try {
+          $price = esc_html($_POST['price']);
+          update_post_meta($post_ID, 'price', $price);
+        } catch (\Exception $e) {
+          echo $e->getMessage();
+        }
       }
     }
   }
@@ -110,16 +105,23 @@ function room_box_content($post)
  */
 function room_box_save($post_ID)
 {
-  if ((!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE))) {
-    if (wp_verify_nonce($_POST['room_box_content_nonce'], plugin_basename(__FILE__))) {
-
+  if (!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE)) {
+    if (isset($_POST['room_box_content_nonce']) && wp_verify_nonce($_POST['room_box_content_nonce'], plugin_basename(__FILE__))) {
       if (isset($_POST['bedrooms'])) {
-        $bedrooms = esc_html($_POST['bedrooms']);
-        update_post_meta($post_ID, 'bedrooms', $bedrooms);
+        try {
+          $bedrooms = esc_html($_POST['bedrooms']);
+          update_post_meta($post_ID, 'bedrooms', $bedrooms);
+        } catch (\Exception $e) {
+          $e->getMessage();
+        }
       }
       if (isset($_POST['bathrooms'])) {
-        $bathrooms = esc_html($_POST['bathrooms']);
-        update_post_meta($post_ID, 'bathrooms', $bathrooms);
+        try {
+          $bathrooms = esc_html($_POST['bathrooms']);
+          update_post_meta($post_ID, 'bathrooms', $bathrooms);
+        } catch (\Exception $e) {
+          $e->getMessage();
+        }
       }
     }
   }
@@ -156,12 +158,15 @@ function surface_box_content($post)
  */
 function surface_box_save($post_ID)
 {
-  if ((!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE))) {
-    if (wp_verify_nonce($_POST['surface_box_content_nonce'], plugin_basename(__FILE__))) {
-
+  if (!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE)) {
+    if (isset($_POST['surface_box_content_nonce']) && wp_verify_nonce($_POST['surface_box_content_nonce'], plugin_basename(__FILE__))) {
       if (isset($_POST['surface'])) {
-        $surface = esc_html($_POST['surface']);
-        update_post_meta($post_ID, 'surface', $surface);
+        try {
+          $surface = esc_html($_POST['surface']);
+          update_post_meta($post_ID, 'surface', $surface);
+        } catch (\Exception $e) {
+          $e->getMessage();
+        }
       }
     }
   }
@@ -200,17 +205,23 @@ function capacity_box_content($post)
  */
 function capacity_box_save($post_ID)
 {
-  if ((!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE))) {
-    if (wp_verify_nonce($_POST['capacity_box_content_nonce'], plugin_basename(__FILE__))) {
-
+  if (!defined('DOING_AUTOSAVE') || (defined('DOING_AUTOSAVE') && !DOING_AUTOSAVE)) {
+    if (isset($_POST['capacity_box_content_nonce']) && wp_verify_nonce($_POST['capacity_box_content_nonce'], plugin_basename(__FILE__))) {
       if (isset($_POST['minCapacity'])) {
-        $min = esc_html($_POST['minCapacity']);
-        update_post_meta($post_ID, 'minCapacity', $min);
+        try {
+          $min = esc_html($_POST['minCapacity']);
+          update_post_meta($post_ID, 'minCapacity', $min);
+        } catch (\Exception $e) {
+          $e->getMessage();
+        }
       }
-
       if (isset($_POST['maxCapacity'])) {
-        $max = esc_html($_POST['maxCapacity']);
-        update_post_meta($post_ID, 'maxCapacity', $max);
+        try {
+          $max = esc_html($_POST['maxCapacity']);
+          update_post_meta($post_ID, 'maxCapacity', $max);
+        } catch (\Exception $e) {
+          $e->getMessage();
+        }
       }
     }
   }

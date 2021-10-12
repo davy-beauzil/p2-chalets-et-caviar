@@ -8,6 +8,9 @@
   .taxonomy_posts {
     grid-template-columns: 1fr;
   }
+  img.taxonomy_post_image {
+    height: 200px !important;
+  }
 }
 
 .taxonomy_posts a {
@@ -29,9 +32,15 @@
 
 .taxonomy_post_title {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin: 0;
   color: #000;
+  font-family: "Libre Baskerville", serif;
+}
+img.taxonomy_post_image {
+  object-fit: cover;
+  width: 100%;
+  height: 300px;
 }
 .taxonomy_post_price {
   position: absolute;

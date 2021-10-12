@@ -19,8 +19,8 @@ function add_scripts()
   wp_enqueue_script('fontAwesome');
   wp_register_script('bundle', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js', null, null, true);
   wp_enqueue_script('bundle');
-  // wp_register_script('popper', 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js', null, null, true);
-  // wp_enqueue_script('popper');
-  // wp_register_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js', null, null, true);
-  // wp_enqueue_script('bootstrap');
+  wp_register_script('popper', 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js', null, null, true);
+  wp_enqueue_script('popper');
+  wp_register_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js', null, null, true);
+  wp_enqueue_script('bootstrap');
 }
