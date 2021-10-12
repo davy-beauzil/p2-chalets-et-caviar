@@ -1,0 +1,109 @@
+div.accueil_site_content {
+  max-width: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+@media screen and (max-width: 800px) {
+  div.accueil_site_content {
+    flex-direction: column;
+    height: auto;
+    margin-bottom: 0;
+  }
+  div.accueil_carousel {
+    width: 100% !important;
+    margin-bottom: 50px;
+  }
+  p.accueil_carousel_price {
+    font-size: 0.75rem;
+    padding: 5px 5px !important;
+  }
+  a.accueil_carousel_cta_single,
+  a.accueil_carousel_cta_others {
+    font-size: 0.75rem;
+    height: 30px !important;
+    line-height: 30px !important;
+    bottom: -30px !important;
+  }
+  img.accueil_carousel_image {
+    height: 150px !important;
+  }
+}
+
+div.accueil_carousel {
+  width: 49%;
+}
+
+div.accueil_carousel_block {
+  position: relative;
+}
+
+h2.accueil_carousel_label {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+div.carousel {
+  -webkit-box-shadow: 0px 15px 38px 10px rgba(0, 0, 0, 0.21);
+  box-shadow: 0px 15px 38px 10px rgba(0, 0, 0, 0.21);
+}
+
+p.accueil_carousel_price {
+  position: absolute;
+  background-color: goldenrod;
+  color: #fff;
+  top: 10px;
+  right: 10px;
+  font-weight: bold;
+  z-index: 999;
+  padding: 5px 40px 5px 10px;
+}
+
+a.accueil_carousel_cta_single,
+a.accueil_carousel_cta_others {
+  background-color: green;
+  position: absolute;
+  display: inline-block;
+  bottom: -50px;
+  height: 50px;
+  line-height: 50px;
+  font-weight: bold;
+  text-decoration: none;
+  width: 50%;
+  text-align: center;
+  transition: 0.3s;
+}
+
+a.accueil_carousel_cta_single {
+  left: 0;
+  color: #fff !important;
+  background-color: goldenrod;
+}
+
+a.accueil_carousel_cta_others {
+  left: 50%;
+  background-color: #fff;
+  color: goldenrod !important;
+}
+
+a.accueil_carousel_cta_single:hover {
+  color: #eee !important;
+}
+
+a.accueil_carousel_cta_others:hover {
+  color: #ccc !important;
+}
+
+div.carousel-inner {
+  display: flex;
+  align-items: center;
+  overflow: initial;
+}
+
+img.accueil_carousel_image {
+  object-fit: cover;
+  width: 100%;
+  height: 400px;
+}
